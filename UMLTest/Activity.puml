@@ -1,0 +1,22 @@
+@startuml
+start
+:Log in;
+:Check reservations;
+if (Tables are free?) then (yes)
+    :Reserve a table;
+    :Check the menu card;
+    :Give the order to waiter;
+    :Check the order status;
+    :proceed to payment;
+    if(payment successful) then (yes)
+        :Take payment receipt;
+    else (no)
+        :Retry for payment;
+    endif
+else (no)
+    :Book for future;
+endif
+
+:Log out;
+stop
+@enduml

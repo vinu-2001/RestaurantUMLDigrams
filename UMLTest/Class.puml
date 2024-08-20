@@ -1,0 +1,206 @@
+@startuml
+enum SeatType {
+    Regular
+    Kid
+    Accessible
+    Other
+} 
+enum ReservationStatus {
+    Requested
+    Pending
+    Confirmed
+    Checked-in
+    Cancelled
+    Abandoned
+}
+enum PaymentStatus {
+  Unpaid
+  Pending
+  Completed 
+  Faild 
+  Decliend
+  Cancelled
+  Abandoned
+  Settling
+  Settled
+  Refunded
+}
+enum OrderStatus {
+    Received
+    Preparing
+    Completed
+    Cancelled
+    None
+}
+enum TableStatus {
+    Free
+    Reserved
+    Occupied
+    Other
+}
+enum AccountStatus {
+    Active
+    Closed
+    Cancelled
+    Blacklisted
+}
+class Address <<dataType>>{
+    streetAddress : String
+    city : String
+    state : String
+    zipcode : String
+    country : String
+}
+class Restaurant{
+    name : String
+    addBranch() : bool
+}
+class Branch{
+    name : String
+    location : String
+    addTableChart(): bool
+}
+class Kitchen{
+    name : String
+    assingChef() : bool
+}
+class Employee{
+    empId : int
+    dateJoined : date
+}
+class Person{
+    name : String
+    email : String
+    phone : String
+}
+class Account {
+    id : String
+    password : String
+    address : Address
+    Status : AccountStatus
+    resetPassword() : bool 
+}
+class Chef{
+    takeOrder() : bool
+}
+class Waiter {
+    createOrder() : bool
+}
+class Receptionist{
+    createReservation() : bool
+}
+class Manager{
+    addEmployee() : bool
+}
+class Customer{
+    lastVisited() : bool
+}
+class TableChart{
+    tableChartId : int 
+    tableChartImage : blob
+    print() : bool
+}
+class Bill{
+    billId : int
+    amount : double
+    tip : double
+    tax : double
+    isPaid : bool
+    createBill() : bool
+}
+class Order{
+    orderId : int
+    status : OrderStatus
+    addMeal() : bool
+    removeMeal() : bool
+    setStatus() : bool
+}
+class Table{
+    tableId : int
+    status : TableStatus
+    maxCapacity : int
+    locationIdentifier : int
+    addReservation() : bool
+}
+class Reservation{
+    reservationId : int
+    timeOfReservation : datetime
+    peopleCount : int
+    status : ReservationStatus
+    note : String
+    checkInTime : date
+    customer : Coustomer
+    updatePeopleCount() : bool
+}
+class Payment {
+    paymentId : int
+    amount : double
+    creationDate : date
+    initiateTransaction() : bool
+}
+class CashTransaction { 
+    cashTendered : double
+}
+class Meal {
+    mealId : int
+    addMealItem() : bool
+}
+class TableSeat{
+    tableSeatNumber : int 
+    type : SeatType
+    updateSeatType() : bool
+} 
+class MealItem{
+    mealItemId : int
+    quantity : int
+    updateQuantity() : bool
+}
+class MenuItem{
+    menuItemId : int
+    title : String
+    description : String
+    price : double
+    updatePrice() : bool
+}
+class Menu {
+    menuId : int
+    title :String
+    description : String
+}
+class MenuSection {
+    menuSectionId : int
+    title  : String
+    description : String
+    addMenuItem() : bool
+}
+
+Restaurant "1" *-- "*" Branch
+Branch "1" *-- "1" Kitchen
+TableChart "*" --* "1" Branch
+Employee "*" -- "1" Branch : works at
+Employee --|> Person : extends
+Account --* Employee 
+Chef --|> Employee : extends
+Waiter --|> Employee : extends
+Receptionist --|> Employee : extends
+Manager --|> Employee : extends
+Chef "1" --> "*" Order : prepares
+Waiter "1" --> "*" Order : takes
+Receptionist --> Reservation : creates 
+Reservation -- Customer
+Customer --|> Person : extends
+Bill "1" -- "1" Order
+Order "*" --> "1" Table : for
+Reservation "*" --> "*" Table
+Payment "1" -- "1" Bill
+CashTransaction --|> Payment : Extends
+Menu "1" -- "1" Branch
+MenuSection "*" --* "1" Menu
+MenuItem "*" --* "1" MenuSection
+Meal "*" --> "0..1" TableSeat
+MealItem "*" --* "1" Meal
+MealItem "*" --> "1" MenuItem : against a
+
+ 
+
+@enduml   

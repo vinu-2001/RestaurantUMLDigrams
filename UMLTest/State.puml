@@ -1,0 +1,26 @@
+@startuml
+
+state "Idle" as Idle {
+    [*] --> WaitingForReservation
+    WaitingForReservation --> ReservationMade: Reserve Table
+    ReservationMade --> WaitingForOrder: Seat Customer
+}
+
+state "Order" as Order {
+    WaitingForOrder --> Ordering: Place Order
+    Ordering --> Preparing: Send to Kitchen
+    Preparing --> Serving: Food Ready
+}
+
+state "Serving" as Serving {
+    Serving --> Eating: Serve Food
+    Eating --> RequestBill: Request Bill
+    RequestBill --> Billing: Generate Bill
+    Billing --> Payment: Pay Bill
+    Payment --> Feedback: Provide Feedback
+    Feedback --> Idle: Leave Restaurant
+}
+
+Idle --> Order: Customer Seated
+Order --> Serving: Order Complete
+@enduml
