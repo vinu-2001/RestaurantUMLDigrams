@@ -8,6 +8,13 @@ if (Tables are free?) then (yes)
     :Give the order to waiter;
     :Check the order status;
     :proceed to payment;
+    split
+        :choose cash;
+    split again
+        :choose card;
+    split again
+        :gpay;
+    end split
     if(payment successful) then (yes)
         :Take payment receipt;
     else (no)
@@ -16,7 +23,6 @@ if (Tables are free?) then (yes)
 else (no)
     :Book for future;
 endif
-
 :Log out;
 stop
 @enduml
