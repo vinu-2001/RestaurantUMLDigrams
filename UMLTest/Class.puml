@@ -1,4 +1,7 @@
 @startuml
+
+title "Restaurant Management System Class Diagram"
+
 enum SeatType {
     Regular
     Kid
