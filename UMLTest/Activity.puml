@@ -2,24 +2,17 @@
 start
 :Log in;
 :Check reservations;
-if (Tables are free?) then (yes)
+if (Are tables free?) then (yes)
     :Reserve a table;
-    :Check the menu card;
-    :Give the order to waiter;
-    :Check the order status;
-    :proceed to payment;
-    split
-        :choose cash;
-    split again
-        :choose card;
-    split again
-        :gpay;
-    end split
-    if(payment successful) then (yes)
-        :Take payment receipt;
-    else (no)
-        :Retry for payment;
-    endif
+    :Browse through menu;
+    :Plaace an order;
+    :Eat meal;
+    Proceed to payment;
+    split :Offline;
+    split again repeat:Online;
+    backward :Retry payment;
+    repeat while (Payment successfull?) is (no) not (yes)
+   :Take receipt;
 else (no)
     :Book for future;
 endif
