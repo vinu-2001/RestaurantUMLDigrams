@@ -7,9 +7,9 @@ if (Are tables free?) then (yes)
     :Browse through menu;
     :Plaace an order;
     :Eat meal;
-    Proceed to payment;
-    split :Offline;
-    split again repeat:Online;
+    repeat :Proceed to payment;
+    ' split :Offline;
+    ' split again repeat:Online;
     backward :Retry payment;
     repeat while (Payment successfull?) is (no) not (yes)
    :Take receipt;
